@@ -1,23 +1,45 @@
-# Progressive Web App Example
+# The Peaks News Project
 
-This example uses [`next-pwa`](https://github.com/shadowwalker/next-pwa) to create a progressive web app (PWA) powered by [Workbox](https://developers.google.com/web/tools/workbox/).
+This project assignment has been developed using NextJs, Typescript and CSS. 
 
-## Deploy your own
+Conventional Commit Rules have been included and configured in this project. 
+Husky, Eslint and CommitLint have been set up as well.
 
-Deploy the example using [Vercel](https://vercel.com?utm_source=github&utm_medium=readme&utm_campaign=next-example):
+PWA feature has also been added.
 
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/git/external?repository-url=https://github.com/vercel/next.js/tree/canary/examples/progressive-web-app&project-name=progressive-web-app&repository-name=progressive-web-app)
-
-## How to use
-
-Execute [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app) with [npm](https://docs.npmjs.com/cli/init), [Yarn](https://yarnpkg.com/lang/en/docs/cli/create/), or [pnpm](https://pnpm.io) to bootstrap the example:
-
+## Get Started
+## Follow the instructions below to run the project locally:
+1. Clone the project:
 ```bash
-npx create-next-app --example progressive-web-app progressive-web-app
-# or
-yarn create next-app --example progressive-web-app progressive-web-app
-# or
-pnpm create next-app --example progressive-web-app progressive-web-app
+git clone https://github.com/gopalen68/thepeaks_news.git
 ```
 
-Deploy it to the cloud with [Vercel](https://vercel.com/new?utm_source=github&utm_medium=readme&utm_campaign=next-example) ([Documentation](https://nextjs.org/docs/deployment)).
+2. Install all packages and dependencies:
+```bash
+npm install
+```
+3. Sign up on [The Guardian Open platform](https://open-platform.theguardian.com/) and register for a developer key.
+
+4. Create a [`.env.local`] file and add the [The Guardian Open platform](https://open-platform.theguardian.com/) developer key respectively:
+```bash
+API_KEY=********-****-****-****-************
+API_URL=https://content.guardianapis.com
+```
+
+5. Start the project by running:
+```bash
+Development 
+--> npm run dev
+
+Production 
+--> npm run build
+--> npm run start
+```
+
+## References
+- [NextJs](https://nextjs.org/docs/getting-started)
+- [Husky](https://typicode.github.io/husky/#/)
+- [Conventional Commits](https://www.conventionalcommits.org/en/v1.0.0/)
+- [Typescript](https://www.typescriptlang.org/docs/)
+
+## Thank you
