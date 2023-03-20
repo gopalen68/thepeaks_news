@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { FaSearch } from "react-icons/fa";
 
 import styles from "../styles/Header.module.css";
@@ -11,7 +12,9 @@ export default function Header({ isActive, setIsActive }: HeaderProps) {
   return (
     <div className={styles.navbar}>
       <div className={styles.logo}>
-        <img src="./images/logo.svg" alt="The Peaks" />
+        <Link href="/">
+          <img src="./images/logo.svg" alt="The Peaks" />
+        </Link>
       </div>
       <div className={styles.searchbar}>
         <input
