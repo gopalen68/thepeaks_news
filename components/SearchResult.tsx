@@ -5,7 +5,7 @@ import CategoryNews from "./CategoryNews";
 export default function SearchResult() {
   return (
     <div className="container">
-      <main className="main__wrapper">
+      <main className={styles.search__wrapper}>
         <div className={styles.top__wrapper}>
           <div className={styles.top__header__content}>
             <div className={styles.title}>Search Result</div>
@@ -21,7 +21,7 @@ export default function SearchResult() {
             </div>
           </div>
           {/* To modify and add flex wrap */}
-          <CategoryNews hasTitle={false} />
+          <CategoryNews hasTitle={false} news={[]} />
         </div>
       </main>
     </div>
