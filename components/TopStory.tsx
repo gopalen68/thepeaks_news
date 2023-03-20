@@ -23,8 +23,15 @@ export default function TopStory({ stories }: any) {
           <CardLg
             id={stories.cardbg.id}
             title={truncate(stories.cardbg.webTitle, 50)}
-            url={stories.cardbg.news_media.news_img}
-            subtitle={truncate(stories.cardbg.news_content.bodyTextSummary, 90)}
+            url={
+              stories.cardbg.blocks.main
+                ? stories.cardbg.blocks.main.elements[0].assets[2].file
+                : "https://i.ibb.co/ZdxCzny/The-Peaks-Bg.png"
+            }
+            subtitle={truncate(
+              stories.cardbg.blocks.body[0].bodyTextSummary,
+              90
+            )}
           />
         </div>
         <div className={styles.right__card}>
@@ -34,7 +41,11 @@ export default function TopStory({ stories }: any) {
                 id={value.id}
                 key={index}
                 title={truncate(value.webTitle, 50)}
-                url={value.news_media.news_img}
+                url={
+                  value.blocks.main
+                    ? value.blocks.main.elements[0].assets[2].file
+                    : "https://i.ibb.co/ZdxCzny/The-Peaks-Bg.png"
+                }
               />
             ))}
           </div>

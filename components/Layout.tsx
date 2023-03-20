@@ -19,6 +19,12 @@ export default function Layout({
   children,
 }: LayoutProps) {
   const [isActive, setIsActive] = useState<boolean>(false);
+  const [searchQuery, setSearchQuery] = useState<string>("");
+
+  const handleChange = async (e: any) => {
+    e.preventDefault();
+    setSearchQuery(e.target.value);
+  };
 
   return (
     <div>
@@ -49,7 +55,12 @@ export default function Layout({
         <link rel="apple-touch-icon" href="/apple-icon.png"></link>
         <meta name="theme-color" content="#317EFB" />
       </Head>
-      <Header isActive={isActive} setIsActive={setIsActive} />
+      <Header
+        isActive={isActive}
+        setIsActive={setIsActive}
+        handleChange={handleChange}
+        searchQuery={searchQuery}
+      />
       {isActive ? (
         <SearchResult />
       ) : (

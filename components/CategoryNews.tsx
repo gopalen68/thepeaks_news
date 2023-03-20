@@ -1,5 +1,4 @@
 import styles from "../styles/TopStory.module.css";
-
 import truncate from "../utils/helper";
 
 import Card from "./Cards/Card";
@@ -30,8 +29,12 @@ export default function CategoryNews({
                 key={index}
                 id={value.id}
                 title={truncate(value.webTitle, 40)}
-                url={value.news_media.news_img}
-                subtitle={value.webTitle}
+                url={
+                  value.blocks.main
+                    ? value.blocks.main.elements[0].assets[2].file
+                    : "https://i.ibb.co/ZdxCzny/The-Peaks-Bg.png"
+                }
+                subtitle={truncate(value.blocks.body[0].bodyTextSummary, 90)}
               />
             );
           }

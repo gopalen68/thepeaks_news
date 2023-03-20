@@ -1,3 +1,13 @@
+.search__wrapper {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  padding: 2rem 0.5rem;
+  gap: 10px;
+  justify-content: center;
+  align-items: center;
+}
+
 .top__wrapper {
   display: flex;
   flex-direction: column;
@@ -28,4 +38,12 @@
   height: 100%;
   border: 0;
   border-bottom: 1px solid rgba(0, 0, 0, 0.42);
+}
+
+@media (min-width: 769px) {
+  .search__wrapper {
+    padding: 2rem 2rem;
+    justify-content: flex-start;
+    width: 100%;
+  }
 }

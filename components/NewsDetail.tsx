@@ -15,22 +15,28 @@ export default function NewsDetail({ news_content }: any) {
               {news_content.webTitle}
             </div>
             <div className={`${styles.blog__subtitle} ${styles.news__title}`}>
-              {news_content.news_content.headline}
+              {news_content.fields.headline}
             </div>
           </div>
           <hr className={styles.divider} />
           <div className={styles.blog__body}>
             <div className={styles.blog__media}>
               <img
-                src={news_content.news_media.news_img}
-                alt={news_content.news_media.news_img_meta.alt}
+                src={
+                  news_content.blocks.main
+                    ? news_content.blocks.main.elements[0].assets[2].file
+                    : "https://i.ibb.co/ZdxCzny/The-Peaks-Bg.png"
+                }
+                alt=""
               />
               <figcaption>
-                {news_content.news_media.news_img_meta.caption}
+                {news_content.blocks.main
+                  ? news_content.blocks.main.elements[0].imageTypeData.caption
+                  : ""}
               </figcaption>
             </div>
             <div className={styles.blog__content}>
-              <div dangerouslySetInnerHTML={{__html: news_content.news_content.bodyHtml}} />
+              <div dangerouslySetInnerHTML={{__html: news_content.blocks.body[0].bodyHtml}} />
             </div>
           </div>
         </div>

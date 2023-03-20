@@ -1,52 +1,29 @@
 const str_api_key = `api-key=${process.env.API_KEY}`;
 
-export async function getTopStoriesNews(section: string) {
-  const news = await getNews(section);
+export async function getHomePageNews() {
+  const top_stories_news = await getNews("news", 8);
+  const sports_news = await getNews("sport", 3);
 
   const news_arr = {
-    cardbg: news[0],
-    cardmd: [news[1], news[2]],
-    cardNoImg: [news[3], news[4]],
-    cardCatNews: [news[5], news[6], news[7]],
+    top_stories: {
+      cardbg: top_stories_news[0],
+      cardmd: [top_stories_news[1], top_stories_news[2]],
+      cardNoImg: [top_stories_news[3], top_stories_news[4]],
+      cardCatNews: [
+        top_stories_news[5],
+        top_stories_news[6],
+        top_stories_news[7],
+      ],
+    },
+    sports: sports_news,
   };
-
   return news_arr;
 }
 
-export async function getNews(
-  section: string,
-) {
+export async function getNews(section: string, pagesize: number) {
   const url = await getApiUrlSection(section);
-  const news = await getNewsbyApiUrl(url);
-
-  for (let i = 0; i < news.length; i++) {
-    const api_url = news[i].apiUrl;
-    const news_media = await getNewsMedia(api_url);
-    const news_content = await getNewsContent(api_url);
-
-    Object.assign(news[i], {
-      news_content: { ...news_content },
-      news_media: { ...news_media },
-    });
-  }
-
+  const news = await getNewsbyApiUrl(url, pagesize);
   return news;
-}
-
-export async function getNewsDetail(url: string) {
-  const news_details = await fetch(`${url}?${str_api_key}`);
-  const news_details_data = await news_details.json();
-  const news_media = await getNewsMedia(url);
-  const news_content = await getNewsContent(url);
-
-  const news_details_arr = { ...news_details_data.response.content }
-
-  Object.assign(news_details_arr, {
-    news_content: { ...news_content },
-    news_media: { ...news_media },
-  });
-
-  return news_details_arr;
 }
 
 export async function getApiUrlSection(section: string) {
@@ -60,53 +37,45 @@ export async function getApiUrlSection(section: string) {
   return url;
 }
 
-export async function getNewsbyApiUrl(url: string) {
-  const news_arr = await fetch(`${url}?${str_api_key}&order-by=newest`);
+export async function getNewsbyApiUrl(url: string, pagesize: number) {
+  const news_arr = await fetch(
+    `${url}?${str_api_key}&order-by=newest&page-size=${pagesize}`
+  );
   const data_news_arr = await news_arr.json();
 
   const news = [...data_news_arr.response.results];
+  const news_result = [];
 
-  return news;
+  for (let i = 0; i < news.length; i++) {
+    const item_url = news[i].apiUrl;
+    const news_content = await getNewsContent(item_url);
+    news_result.push(news_content);
+  }
+  return news_result;
 }
 
 export async function getNewsContent(apiUrl: string) {
   const news_detail = await fetch(
-    `${apiUrl}?${str_api_key}&show-blocks=body&show-elements=all&show-fields=headline`
+    `${apiUrl}?${str_api_key}&show-blocks=all&show-fields=headline`
   );
   const news_content_data = await news_detail.json();
-
-  const news_content = {
-    headline: news_content_data.response.content.fields.headline,
-    bodyHtml: news_content_data.response.content.blocks.body[0].bodyHtml,
-    bodyTextSummary:
-      news_content_data.response.content.blocks.body[0].bodyTextSummary,
-  };
+  const news_content = { ...news_content_data.response.content };
 
   return news_content;
 }
 
-export async function getNewsMedia(apiUrl: string) {
-  const news_media = await fetch(
-    `${apiUrl}?${str_api_key}&show-blocks=main&show-elements=all`
+export async function getSearchResult(searchQuery: string) {
+  const search_api_urls = await fetch(
+    `${process.env.API_URL}?q=${searchQuery}&${str_api_key}&page-size=15`
   );
-  const news_media_data = await news_media.json();
+  const search_arr = await search_api_urls.json();
 
-  const media_content = {
-    news_img: news_media_data.response.content.blocks
-      ? news_media_data.response.content.blocks.main.elements[0].assets[2].file
-      : "https://i.ibb.co/ZdxCzny/The-Peaks-Bg.png",
-    news_img_meta: {
-      caption: news_media_data.response.content.blocks
-        ? news_media_data.response.content.blocks.main.elements[0].imageTypeData
-            .caption
-        : "",
-      alt: news_media_data.response.content.blocks
-        ? news_media_data.response.content.blocks.main.elements[0].imageTypeData
-            .alt
-        : "",
-    },
-  };
-
-  return media_content;
+  const search_news = [...search_arr.response.results];
+  const search_result = [];
+  for (let i = 0; i < search_news.length; i++) {
+    const item_url = search_news[i].apiUrl;
+    const news_content = await getNewsContent(item_url);
+    search_result.push(news_content);
+  }
+  return search_result;
 }
-
